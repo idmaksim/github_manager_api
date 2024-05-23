@@ -7,7 +7,7 @@ class GithubService:
         self.github = Github(access_token)
         self.user = self.github.get_user()
         
-    def delete_repo(self, repo_name: str) -> None:
+    async def delete_repo(self, repo_name: str) -> None:
         repo = self.user.get_repo(repo_name)
         
         if repo is None:
@@ -15,10 +15,10 @@ class GithubService:
         
         repo.delete()
         
-    def create_repo(self, repo: RepositoryRequestModel) -> None:
+    async def create_repo(self, repo: RepositoryRequestModel) -> None:
         self.user.create_repo(name=repo.name, description=repo.description, private=repo.private)
         
-    def add_collaborators(self, repo_name: str, usernames: list[str]) -> None:
+    async def add_collaborators(self, repo_name: str, usernames: list[str]) -> None:
         repo = self.user.get_repo(repo_name)
         
         if repo is None:
