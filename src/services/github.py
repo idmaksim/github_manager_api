@@ -1,6 +1,5 @@
 from github import Github, GithubException
-
-from schemas.repository import RepositoryAdd
+from schemas.repository import RepositoryRequestModel
 
 
 class GithubService:
@@ -16,7 +15,7 @@ class GithubService:
         
         repo.delete()
         
-    def create_repo(self, repos: RepositoryAdd) -> None:
+    def create_repo(self, repos: RepositoryRequestModel) -> None:
         self.user.create_repo(name=repos.name, description=repos.description, private=repos.private)
         
     def add_collaborators(self, repo_name: str, usernames: list[str]) -> None:

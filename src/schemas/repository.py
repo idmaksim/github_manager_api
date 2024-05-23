@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 
-class RepositoryAdd(BaseModel):
+class RepositoryRequestModel(BaseModel):
     name: str
     description: str
     private: bool = True

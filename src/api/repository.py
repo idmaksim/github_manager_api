@@ -1,5 +1,5 @@
 from fastapi import Query, Request, Response, APIRouter, status
-from schemas.repository import RepositoryAdd
+from schemas.repository import RepositoryRequestModel
 from services.github import GithubService
 from utils.error_handler import handle_route_error
 
@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.post('')
-async def add_repos(request: Request, repository: RepositoryAdd):
+async def add_repos(request: Request, repository: RepositoryRequestModel):
     try:
         service=GithubService(request.headers['access-token'])
         service.create_repo(repository)
