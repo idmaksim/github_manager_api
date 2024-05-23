@@ -1,0 +1,6 @@
+fastapi[all]
+sqlalchemy
+asyncpg
+PyGithub
+python-multipart
+aiosqlite
