@@ -1,3 +1,4 @@
+from typing import Annotated
 from fastapi import Depends, Query, Request, Response, APIRouter, status
 from api.dependencies import get_github_service
 from schemas.repository import RepositoryRequestModel
@@ -13,9 +14,8 @@ router = APIRouter(
 
 @router.post('')
 async def add_repo(
-    # request: Request,
     repository: RepositoryRequestModel,
-    service: GithubService = Depends(get_github_service),
+    service: Annotated[GithubService, Depends(get_github_service)],
 ):
     try:
         service.create_repo(repository)
@@ -25,22 +25,27 @@ async def add_repo(
         
 
 @router.delete('')
-async def delete_repo(request: Request, name: str):
+async def delete_repo(
+    service: Annotated[GithubService, Depends(get_github_service)],
+    name: str
+):
     try:
-        service=GithubService(request.headers['access-token'])
-
         service.delete_repo(name)
+        return Response(status_code=200)
     
     except Exception as e:
         await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
 
 
 @router.put('')
-async def update_repo(request: Request, name: str = Query()):
+async def update_repo(
+    request: Request,
+    service: Annotated[GithubService, Depends(get_github_service)],
+    name: str
+):
     try:
         user_names: list[str] = (await request.json())['user_names']
         
-        service=GithubService(request.headers['access-token'])
         service.add_collaborators(name, user_names)
 
         return Response(status_code=200)
