@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import Depends, Query, Request, Response, APIRouter, status
+from fastapi import Depends, Request, Response, APIRouter, status
 from api.dependencies import get_github_service
 from schemas.repository import RepositoryRequestModel
 from services.github import GithubService
@@ -38,7 +38,7 @@ async def delete_repo(
 
 
 @router.put('')
-async def update_repo(
+async def add_collaborators(
     request: Request,
     service: Annotated[GithubService, Depends(get_github_service)],
     name: str
