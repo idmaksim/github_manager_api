@@ -1,4 +1,5 @@
-from github import Github, GithubException
+from github import Github
+
 from schemas.repository import RepositoryRequestModel
 
 

@@ -1,5 +1,7 @@
 from typing import Annotated
-from fastapi import Depends, Request, Response, APIRouter, status
+
+from fastapi import APIRouter, Depends, Request, Response, status
+
 from api.dependencies import get_github_service
 from schemas.repository import RepositoryRequestModel
 from services.github import GithubService

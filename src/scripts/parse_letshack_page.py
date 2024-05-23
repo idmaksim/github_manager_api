@@ -1,8 +1,9 @@
 import json
-import emoji.unicode_codes
-import requests 
-from bs4 import BeautifulSoup as BS
 import re
+
+import emoji.unicode_codes
+import requests
+from bs4 import BeautifulSoup as BS
 
 
 EMAIL = 'bopleromn@gmail.com'
