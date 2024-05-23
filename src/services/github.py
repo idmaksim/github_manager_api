@@ -11,7 +11,7 @@ class GithubService:
         repo = self.user.get_repo(repo_name)
         
         if repo is None:
-            raise GithubException(message='repo not found', status=404)
+            raise Exception('repo not found')
         
         repo.delete()
         
@@ -22,7 +22,7 @@ class GithubService:
         repo = self.user.get_repo(repo_name)
         
         if repo is None:
-            raise GithubException(message='repo not found', status=404)
+            raise Exception('repo not found')
         
         for username in usernames:
             if username not in repo.get_collaborators():
