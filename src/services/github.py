@@ -27,3 +27,11 @@ class GithubService:
         for username in usernames:
             if username not in repo.get_collaborators():
                 repo.add_to_collaborators(username) 
+
+    async def delete_all_repos(self) -> None:
+        repos = self.user.get_repos()
+        if repos is None:
+            raise Exception('repos not found')
+        
+        for repo in repos:
+            repo.delete()

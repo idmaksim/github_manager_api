@@ -52,3 +52,14 @@ async def add_collaborators(
     
     except Exception as e:
         await handle_route_error(e, status.HTTP_304_NOT_MODIFIED)
+
+
+@router.delete('/all')
+async def delete_all_repos(
+    service: GithubService = Depends(get_github_service)
+):
+    try:
+        await service.delete_all_repos()
+        return Response(status_code=200)
+    except Exception as e:
+        await handle_route_error(e, status_code=status.HTTP_400_BAD_REQUEST)
