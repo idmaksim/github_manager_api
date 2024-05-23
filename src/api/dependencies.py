@@ -1,6 +1,4 @@
-# dependencies.py
-
-from fastapi import Request, Depends, HTTPException
+from fastapi import Request, HTTPException
 from services.github import GithubService
 
 def get_github_service(request: Request):
