@@ -15,15 +15,15 @@ class GithubService:
         
         repo.delete()
         
-    def create_repo(self, repos: RepositoryRequestModel) -> None:
-        self.user.create_repo(name=repos.name, description=repos.description, private=repos.private)
+    def create_repo(self, repo: RepositoryRequestModel) -> None:
+        self.user.create_repo(name=repo.name, description=repo.description, private=repo.private)
         
     def add_collaborators(self, repo_name: str, usernames: list[str]) -> None:
         repo = self.user.get_repo(repo_name)
         
-        if repo is not None:
-            for username in usernames:
-                if username not in repo.get_collaborators():
-                    repo.add_to_collaborators(username) 
-        else:
+        if repo is None:
             raise GithubException(message='repo not found', status=404)
+        
+        for username in usernames:
+            if username not in repo.get_collaborators():
+                repo.add_to_collaborators(username) 
