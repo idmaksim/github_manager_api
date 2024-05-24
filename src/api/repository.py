@@ -43,7 +43,8 @@ async def delete_repo(
 async def add_collaborators(
     request: Request,
     service: Annotated[GithubService, Depends(get_github_service)],
-    name: str
+    name: str,
+    usernames: list[str]
 ):
     try:
         user_names: list[str] = (await request.json())['user_names']
