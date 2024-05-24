@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, Request, Response, status
 
@@ -41,16 +41,12 @@ async def delete_repo(
 
 @router.put('')
 async def add_collaborators(
-    request: Request,
     service: Annotated[GithubService, Depends(get_github_service)],
-    name: str,
-    usernames: list[str]
+    repo_name: str,
+    usernames: List[str]
 ):
     try:
-        # user_names: list[str] = (await request.json())['user_names']
-        
-        await service.add_collaborators(name, usernames)
-
+        await service.add_collaborators(repo_name, usernames)
         return Response(status_code=200)
     
     except Exception as e:
