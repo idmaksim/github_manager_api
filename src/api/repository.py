@@ -47,9 +47,9 @@ async def add_collaborators(
     usernames: list[str]
 ):
     try:
-        user_names: list[str] = (await request.json())['user_names']
+        # user_names: list[str] = (await request.json())['user_names']
         
-        await service.add_collaborators(name, user_names)
+        await service.add_collaborators(name, usernames)
 
         return Response(status_code=200)
     
