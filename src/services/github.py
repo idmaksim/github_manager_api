@@ -36,3 +36,21 @@ class GithubService:
         
         for repo in repos:
             repo.delete()
+
+    async def get_all_repos(self):
+        repos = self.user.get_repos()
+            
+        dict_repos = [
+            dict(
+                name=repo.name, 
+                description=repo.description, 
+                private=repo.private
+            ) 
+            for repo in repos
+        ]
+
+        if dict_repos:
+            return dict_repos
+        raise Exception('repos not found')
+        
+                

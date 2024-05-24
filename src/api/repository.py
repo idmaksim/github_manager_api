@@ -62,3 +62,15 @@ async def delete_all_repos(
         return Response(status_code=200)
     except Exception as e:
         await handle_route_error(e, status_code=status.HTTP_400_BAD_REQUEST)
+
+
+@router.get('/all')
+async def get_all_repos(
+    service: GithubService = Depends(get_github_service)
+):
+    try:
+        repos_info = await service.get_all_repos()
+        return repos_info
+    
+    except Exception as e:
+        await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
