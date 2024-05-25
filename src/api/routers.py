@@ -1,7 +1,5 @@
+from api import letshack_info, repository
 from fastapi import APIRouter
-
-from api import repository, letshack_info
-
 
 main_api_router = APIRouter(
     prefix='/api'

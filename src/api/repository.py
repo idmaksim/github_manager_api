@@ -1,12 +1,10 @@
 from typing import Annotated, List
 
-from fastapi import APIRouter, Depends, Request, Response, status
-
 from api.dependencies import get_github_service
+from fastapi import APIRouter, Depends, Response, status
 from schemas.repository import RepositoryRequestModel
 from services.github import GithubService
 from utils.error_handler import handle_route_error
-
 
 router = APIRouter(
     prefix="/repos",

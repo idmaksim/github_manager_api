@@ -1,8 +1,6 @@
-from contextlib import asynccontextmanager
+from api.routers import main_api_router
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from api.routers import main_api_router
-
 
 app = FastAPI()
 app.include_router(main_api_router)

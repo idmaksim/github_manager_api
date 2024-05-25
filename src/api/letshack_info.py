@@ -1,8 +1,7 @@
 import json
+
 from fastapi import APIRouter, status
-
 from utils.error_handler import handle_route_error
-
 
 router = APIRouter(
     prefix="/letshack",
