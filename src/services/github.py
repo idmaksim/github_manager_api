@@ -51,5 +51,28 @@ class GithubService:
         if dict_repos:
             return dict_repos
         raise Exception('repos not found')
+
+    async def get_repo_details(self, repo_name: str):
+        repo = self.user.get_repo(repo_name)
+        
+        if repo is None:
+            raise Exception('repo not found')
+        
+        details = {
+            'name': repo.name,
+            'description': repo.description,
+            'private': repo.private,
+            'collaborators': [collaborator.login for collaborator in repo.get_collaborators()],
+            'branches': [branch.name for branch in repo.get_branches()],
+            'releases': [release.title for release in repo.get_releases()],
+        }
+        
+        return details
+    
+    async def repo_exists(self, repo_name: str) -> bool:
+        repo = self.user.get_repo(repo_name)
+        
+        return repo is not None
+
         
                 
