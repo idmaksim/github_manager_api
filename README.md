@@ -5,8 +5,6 @@ This project is an API for managing your GitHub repositories. It allows you to p
 
 ## Features
 - **Repository Management**: Create, update, and delete repositories.
-- **Issues Management**: Open, close, and manage issues.
-- **Pull Requests**: Create and manage pull requests.
 - **Branch Management**: Create, delete, and manage branches. 
 - **Commit History**: View commit history and details.
 - **User Management**: Get user information and manage collaborators.
