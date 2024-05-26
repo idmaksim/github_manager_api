@@ -1,7 +1,8 @@
 # GitHub Management API
 
 ## Project Description
-This project is an API for managing your GitHub repositories. It allows you to perform various actions such as creating, updating, deleting repositories, managing issues, pull requests, and more, all through a convenient RESTful interface. The API is built using FastAPI, making it fast, reliable, and easy to use. 
+
+This project is an API for managing your GitHub repositories. It allows you to perform various actions such as creating, updating, deleting repositories and more, all through a convenient RESTful interface. The API is built using FastAPI, making it fast, reliable, and easy to use. 
 
 ## Features
 - **Repository Management**: Create, update, and delete repositories.
