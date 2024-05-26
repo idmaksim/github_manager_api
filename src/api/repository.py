@@ -28,7 +28,6 @@ async def add_repo(
         none: only status code is returned
     """
     try:
-        print(repository)
         await service.create_repo(repository)
         return Response(status_code=status.HTTP_201_CREATED)
 
