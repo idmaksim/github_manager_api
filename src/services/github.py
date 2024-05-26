@@ -69,10 +69,24 @@ class GithubService:
         
         return details
     
-    async def repo_exists(self, repo_name: str) -> bool:
-        repo = self.user.get_repo(repo_name)
+    async def get_commit_history(self, name: str):
+        repo = self.user.get_repo(name)
         
-        return repo is not None
+        if repo is None:
+            raise Exception('repo not found')
+        
+        commits = repo.get_commits()
+        
+        return [
+            {
+                'sha': commit.sha,
+                'message': commit.commit.message,
+                'author': commit.author.login,
+                'date': commit.commit.author.date
+            }
+            for commit in commits
+        ]
+                        
 
         
                 
