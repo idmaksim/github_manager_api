@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 app = FastAPI(
-    title="Github managerAPI",
+    title="Github manager API",
     description="API for github manager",
     version="1.0"
 )
