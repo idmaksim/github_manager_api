@@ -19,7 +19,7 @@ router = APIRouter(
 async def info_letshack():
     try:
 
-        with open("src/utils/parsed_info50.json", "r", encoding="utf-8") as f:
+        with open("src/utils/parsed_info.json", "r", encoding="utf-8") as f:
             data = json.load(f)
 
         return data
