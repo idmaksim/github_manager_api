@@ -1,168 +1,76 @@
-from typing import Annotated, List
+from typing import Annotated
+from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 
-from api.dependencies import get_github_service
-from fastapi import APIRouter, Depends, Response, status
-from schemas.repository import RepositoryRequestModel
+from schemas.repository import AddCollaborators, RepositoryCreate
 from services.github import GithubService
-from utils.error_handler import handle_route_error
+from api.dependencies import get_github_service
+
 
 router = APIRouter(
     prefix="/repos",
     tags=["Repository"],
+    default_response_class=JSONResponse
 )
 
 
-@router.post("")
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def add_repo(
-    repository: RepositoryRequestModel,
+    repository: RepositoryCreate,
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
-    """
-    return HTTP_201_CREATED if repo created successfully
-
-    Args:
-        repository (RepositoryRequestModel): _description_
-        service (Annotated[GithubService, Depends): _description_
-
-    Returns:
-        none: only status code is returned
-    """
-    try:
-        await service.create_repo(repository)
-        return Response(status_code=status.HTTP_201_CREATED)
-
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_400_BAD_REQUEST)
+    await service.create_repo(repository)
+    return {'message': 'repo created succesfully!'}
 
 
-@router.delete("")
+@router.delete("", status_code=status.HTTP_200_OK)
 async def delete_repo(
-    service: Annotated[GithubService, Depends(get_github_service)], name: str
+    service: Annotated[GithubService, Depends(get_github_service)], 
+    name: str
 ):
-    """
-    return HTTP_200_OK if repo deleted successfully
-
-    Args:
-        service (Annotated[GithubService, Depends): depends on github service
-        name (str): name of the repo
-
-    Returns:
-        none: only status code is returned
-    """
-    try:
-        await service.delete_repo(name)
-        return Response(status_code=status.HTTP_200_OK)
-
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
+    await service.delete_repo(name)
+    return {'message': 'repo deleted succesfully!'}
 
 
-@router.put("")
+@router.put("", status_code=status.HTTP_200_OK)
 async def add_collaborators(
     service: Annotated[GithubService, Depends(get_github_service)],
-    repo_name: str,
-    usernames: List[str],
+    info: AddCollaborators
 ):
-    """
-    return HTTP_200_OK if collaborators added successfully
-
-    Args:
-        service (Annotated[GithubService, Depends): depepends on github service
-        repo_name (str): name of the repo
-        usernames (List[str]): collaborators to add
-
-    Returns:
-        none: only status code is returned
-    """
-    try:
-        await service.add_collaborators(repo_name, usernames)
-        return Response(status_code=status.HTTP_200_OK)
-
-    except Exception as e:
-        await handle_route_error(e, status.HTTP_304_NOT_MODIFIED)
+    await service.add_collaborators(info.repo_name, info.usernames)
+    return {'message': f'collaborators {info.usernames} added succesfully!'}
 
 
-@router.delete("/all")
+@router.delete("/all", status_code=status.HTTP_200_OK)
 async def delete_all_repos(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
-    """
-    return HTTP_200_OK if repos deleted successfully
+    await service.delete_all_repos()
+    return {'message': 'all repos deleted succesfully!'}
+  
 
-    Args:
-        service (Annotated[GithubService, Depends): depends on github service
-
-    Returns:
-        none: only status code is returned
-    """
-    try:
-        await service.delete_all_repos()
-        return Response(status_code=status.HTTP_200_OK)
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_400_BAD_REQUEST)
-
-
-@router.get("/all")
+@router.get("/all", status_code=status.HTTP_200_OK)
 async def get_all_repos(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
-    """
-    returns list of all repos
-
-    Args:
-        service (Annotated[GithubService, Depends): depends on github service
-
-    Returns:
-        list: list of dict info of repos
-    """
-    try:
-        repos_info = await service.get_all_repos()
-        return repos_info
-
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
+    repos_info = await service.get_all_repos()
+    return repos_info
 
 
-@router.get("/commits")
+@router.get("/commits", status_code=status.HTTP_200_OK)
 async def get_repo_commits(
-    service: Annotated[GithubService, Depends(get_github_service)], name: str
+    name: str,
+    service: Annotated[GithubService, Depends(get_github_service)], 
 ):
-    """
-    returns commit history of a repo
-
-    Args:
-        service (Annotated[GithubService, Depends): depends on github service
-        name (str): name of the repo
-
-    Returns:
-        list: list of dict info of commits
-    """
-    try:
-        commits = await service.get_commit_history(name)
-        return commits
-
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
+    commits = await service.get_commit_history(name)
+    return commits
 
 
-@router.get("/details")
+@router.get("/details", status_code=status.HTTP_200_OK)
 async def get_repo_details(
     name: str,
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
-    """
-    returns details of a repo
+    details = await service.get_repo_details(name)
+    return details
 
-    Args:
-        name (str): name of the repo
-        service (Annotated[GithubService, Depends): depends on github service
-
-    Returns:
-        list: list of dict info of commits
-    """
-    try:
-        details = await service.get_repo_details(name)
-        return details
-
-    except Exception as e:
-        await handle_route_error(e, status_code=status.HTTP_404_NOT_FOUND)
