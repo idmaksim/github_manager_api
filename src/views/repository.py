@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 
-from schemas.repository import AddCollaborators, RepositoryCreate
+from schemas.repository import AddCollaborators, RepositoryCreate, RepositoryDetails
 from services.github import GithubService
 from views.dependencies import get_github_service
 
@@ -66,7 +66,7 @@ async def get_repo_commits(
     return commits
 
 
-@router.get("/details", status_code=status.HTTP_200_OK)
+@router.get("/details", status_code=status.HTTP_200_OK, response_model=RepositoryDetails)
 async def get_repo_details(
     name: str,
     service: Annotated[GithubService, Depends(get_github_service)],

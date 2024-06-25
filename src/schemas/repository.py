@@ -15,8 +15,8 @@ class AddCollaborators(BaseModel):
 
 class RepositoryDetails(BaseModel):
     name: str
-    description: str
+    description: str | None
     private: bool
-    collaborators: list[str]
+    collaborators: list
     branches: list 
     releases: list

@@ -89,23 +89,27 @@ class GithubService:
         )
     
     async def get_repo_details(self, repo_name: str):
-        repo = self.user.get_repo(repo_name)
-        if repo is None:
-            raise HTTPException(
-                detail='repo not found', 
-                status_code=status.HTTP_404_NOT_FOUND
-            )
-        
-        details = {
-            'name': repo.name,
-            'description': repo.description,
-            'private': repo.private,
-            'collaborators': [collaborator.login for collaborator in repo.get_collaborators()],
-            'branches': [branch.name for branch in repo.get_branches()],
-            'releases': [release.title for release in repo.get_releases()],
-        }
-        
-        return details
+        try:
+
+            repo = self.user.get_repo(repo_name)
+            if repo is None:
+                raise HTTPException(
+                    detail='repo not found', 
+                    status_code=status.HTTP_404_NOT_FOUND
+                )
+            
+            details = {
+                'name': repo.name,
+                'description': repo.description,
+                'private': repo.private,
+                'collaborators': [collaborator.login for collaborator in repo.get_collaborators()],
+                'branches': [branch.name for branch in repo.get_branches()],
+                'releases': [release.title for release in repo.get_releases()],
+            }
+            
+            return details
+        except UnknownObjectException:
+            raise HTTPException(detail='repo not found', status_code=status.HTTP_404_NOT_FOUND)
     
     async def get_commit_history(self, name: str):
         repo = self.user.get_repo(name)
