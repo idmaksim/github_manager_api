@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from schemas.repository import AddCollaborators, RepositoryCreate
 from services.github import GithubService
-from api.dependencies import get_github_service
+from views.dependencies import get_github_service
 
 
 router = APIRouter(

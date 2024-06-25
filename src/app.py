@@ -1,4 +1,4 @@
-from api.routers import main_api_router
+from views.routers import main_api_router
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 

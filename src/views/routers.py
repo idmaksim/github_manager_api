@@ -1,4 +1,4 @@
-from api import repository
+from views.repository import router as repository_router
 from fastapi import APIRouter
 
 main_api_router = APIRouter(
@@ -6,7 +6,7 @@ main_api_router = APIRouter(
 )
 
 routers = [
-    repository.router,
+    repository_router,
 ]
 
 [main_api_router.include_router(router) for router in routers]
