@@ -1,7 +1,11 @@
 from typing import List
 from pydantic import BaseModel
 
-# TODO comment file bopleromn
+
+""" 
+Classes for validation when receiving data from web requests
+"""
+
 
 class RepositoryCreate(BaseModel):
     name: str

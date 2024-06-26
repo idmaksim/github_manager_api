@@ -1,6 +1,5 @@
 from fastapi import HTTPException, status
 from github import Github
-
 from github.GithubException import (
     UnknownObjectException,
     GithubException
@@ -8,12 +7,13 @@ from github.GithubException import (
 
 from schemas.repository import RepositoryCreate
 
-# TODO comment file bopleromn
-
 
 class GithubService:
+    """
+    Additional layer of abstraction to make interacting with Github API easier
+    """
     def __init__(self, access_token: str) -> None:
-        self.github = Github(access_token)
+        self.github = Github(access_token) # abstraction class for actually talking to API through HTTPS request
         self.user = self.github.get_user()
         
     async def delete_repo(self, repo_name: str) -> None:
@@ -25,7 +25,6 @@ class GithubService:
                     status_code=status.HTTP_404_NOT_FOUND
                 )
             repo.delete()
-            
         except UnknownObjectException:
             raise HTTPException(
                 detail='repo not found',
@@ -34,7 +33,6 @@ class GithubService:
         
     async def create_repo(self, repo: RepositoryCreate) -> None:
         try:
-
             new_repo = self.user.create_repo(
                 name=repo.name, 
                 description=repo.description, 
@@ -50,7 +48,6 @@ class GithubService:
                 detail='repo already exists',
                 status_code=status.HTTP_409_CONFLICT 
             )
-
 
     async def add_collaborators(self, repo_name: str, usernames: list[str]) -> None:
         repo = self.user.get_repo(repo_name)
@@ -93,7 +90,6 @@ class GithubService:
     
     async def get_repo_details(self, repo_name: str):
         try:
-
             repo = self.user.get_repo(repo_name)
             if repo is None:
                 raise HTTPException(
@@ -133,7 +129,3 @@ class GithubService:
             }
             for commit in commits
         ]
-                        
-
-        
-                

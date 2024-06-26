@@ -19,7 +19,7 @@ async def add_repo(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
     """    
-    Create a new repository.    
+    Create a new repository route.    
     Args:
         repository (RepositoryCreate): A model containing the data for the new repository.
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
@@ -38,7 +38,7 @@ async def delete_repo(
     name: str
 ):  
     """
-    Delete a repository.    
+    Delete a repository route.    
     Args
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
         name (str): The name of the repository to delete.
@@ -56,7 +56,7 @@ async def add_collaborator(
     info: AddCollaborators
 ):
     """    
-    Add a collaborator to a repository.    
+    Add a collaborator to a repository route.    
     Args:
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
         info (AddCollaborators): A model containing the repository name and usernames of the collaborators to add.
@@ -73,7 +73,7 @@ async def delete_all_repos(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
     """
-    Delete all repositories.    
+    Delete all repositories route.    
     Args:
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
     """
@@ -86,7 +86,7 @@ async def get_all_repos(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
     """
-    Get all repositories.    
+    Get all repositories route.    
     Args:
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
 
@@ -103,7 +103,7 @@ async def get_repo_commits(
     service: Annotated[GithubService, Depends(get_github_service)], 
 ):
     """
-    Get commits history of a repository.    
+    Get commits history of a repository route.    
     Args:
         name (str): The name of the repository to get commit history for.
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
@@ -121,7 +121,7 @@ async def get_repo_details(
     service: Annotated[GithubService, Depends(get_github_service)],
 ):
     """
-    Get details of a repository.    
+    Get details of a repository route.    
     Args:
         name (str): The name of the repository to get details for.
         service (Annotated[GithubService, Depends(get_github_service)]): An instance of the GithubService class.
@@ -131,4 +131,3 @@ async def get_repo_details(
     """
     details = await service.get_repo_details(name)
     return details
-
