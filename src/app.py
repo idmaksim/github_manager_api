@@ -2,6 +2,10 @@ from views.routers import main_api_router
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
+"""
+Full documentation you can see at [server_ip_address:port]/docs or /redoc
+"""
+
 app = FastAPI(
     title="Github manager API",
     description="API for github manager",
