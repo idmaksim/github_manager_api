@@ -13,7 +13,7 @@ This project is an API for managing your GitHub repositories. It allows you to p
 ## Getting Started
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.9 or higher
 - GitHub account
 - Personal Access Token from GitHub with the necessary permissions
 
@@ -21,7 +21,7 @@ This project is an API for managing your GitHub repositories. It allows you to p
 
 ### to run this project you need:
  - install requirements from requirements.txt
- - dev or release mode: fastapi [dev or run] src/app.py --reload --port 8090
+ - dev or release mode: fastapi [dev or run] src/app.py --reload --port [port]
 ### or
 - install docker
 - cmd: docker build -t [name of your image] .
